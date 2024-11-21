@@ -1,7 +1,7 @@
 import Layer from "./gl-layers.js";
 import * as THREE from "three";
-import { MeshLineGeometry, MeshLineMaterial } from '../../plugins/meshline.js'
-import { TessellateModifier } from "three/addons/modifiers/TessellateModifier.js";
+import { MeshLineGeometry, MeshLineMaterial } from "../../plugins/meshline.js";
+import { TessellateModifier } from "../../js/TessellateModifier.js";
 
 class TerrainPolygonLayer extends Layer {
   // 缓存边界区域的路径
@@ -117,14 +117,17 @@ class TerrainPolygonLayer extends Layer {
    * 增加方向光照，使法线贴图产生效果
    */
   initLight() {
-    const {intensity} = this._conf
+    const { intensity } = this._conf;
     // 方向平行光
-    const directionalLight = new THREE.DirectionalLight( 0xffffff, 1.0 * intensity);
+    const directionalLight = new THREE.DirectionalLight(
+      0xffffff,
+      1.0 * intensity
+    );
     directionalLight.position.set(1, 1, 1);
     this.scene.add(directionalLight);
     // 环境光
-    const light = new THREE.AmbientLight( 0x404040, 2.0 * intensity ); // soft white light
-    this.scene.add( light );
+    const light = new THREE.AmbientLight(0x404040, 2.0 * intensity); // soft white light
+    this.scene.add(light);
   }
 
   getParentObject({ object }) {
@@ -257,7 +260,8 @@ class TerrainPolygonLayer extends Layer {
   createTopMesh() {
     const { normalScale, displacementScale } = this._conf;
 
-    const { textureMap, normalMap, displacementMap, alphaMap } = this._topMeshProps;
+    const { textureMap, normalMap, displacementMap, alphaMap } =
+      this._topMeshProps;
 
     // 将纹理设置为sRGB颜色空间，以便正确显示颜色
     textureMap.encoding = THREE.sRGBEncoding;
